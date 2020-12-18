@@ -18,10 +18,22 @@ class Weapon:
 	:param power: Le niveau d'attaque
 	:param min_level: Le niveau minimal pour l'utiliser
 	"""
-
+	
 	UNARMED_POWER = 20
 
+	def __init__(self, nom, attaque, niveau_minimal):
+		self.__nom = nom
+		self.attaque = attaque
+		self.niveau_minimal = niveau_minimal
 
+	@property
+	def nom(self):
+		return self.__nom
+
+	@classmethod
+	def make_unarmed(cls):
+		return Weapon(Weapon.UNARMED_POWER, "Unarmed", 1)
+		
 class Character:
 	"""
 	Un personnage dans le jeu
@@ -32,6 +44,33 @@ class Character:
 	:param defense: Le niveau de défense du personnage
 	:param level: Le niveau d'expérience du personnage
 	"""
+	def __init__(self, nom, max_hp, attack, defense, level):
+		self.__nom = nom
+		self.max_hp = max_hp
+		self.attack = attack
+		self.defense = defense
+		self.level = level
+		self.weapon = None
+		self.hp = max_hp
+	@property
+	def nom(self):
+		return self.__nom
+
+	@property
+	def weapon(self):
+		return self.__weapon	
+
+	@weapon.setter
+	def weapon(self, val):
+		if val is None:
+			val = Weapon.make_unarmed()
+		if val.niveau_minimal > self.level:
+			raise ValueError(Weapon)
+		self.__weapon = val 		
+
+	def compute_damage(self, defendant: "Character"):
+		return 
+
 
 
 
